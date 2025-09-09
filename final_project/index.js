@@ -12,6 +12,15 @@ app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUni
 
 app.use("/customer/auth/*", function auth(req,res,next){
 //Write the authenication mechanism here
+    const {email,password} = req.body;
+    const user={}
+    const token=jwt.sign(
+        {id: user.id, email: user.email},
+        "mySuperSecretKey",
+        {expiresIn: "1h"}
+    );
+    res.json({success: true, token});
+    next();
 });
  
 const PORT =5000;
